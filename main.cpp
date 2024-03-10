@@ -11,6 +11,7 @@ struct exp_data
 {
     vvvd s;
     vd t;
+    int turn;
 };
 
 vvvd conversion(const vvd &s, int first);
@@ -30,7 +31,7 @@ void DQN(int epoch)
     dqn.add_Layer(Dense(32, He)); // 32
     dqn.add_Layer(ReLU());
 
-    dqn.add_Layer(Dense(2, He));
+    dqn.add_Layer(Dense(3, He));
 
     dqn.set_Loss(Identity_with_Loss());
 
@@ -47,13 +48,13 @@ void DQN(int epoch)
         game.refresh();
         while (true)
         {
-            exp.push_back({conversion(game.get_board(), game.get_turn()), {game.get_my(), game.get_op()}});
+            exp.push_back({conversion(game.get_board(), game.get_turn()), {game.get_my(), game.get_op()}, game.get_turn()});
             pss a = choice(dqn, game, R, E);
             int status = game.main(a.first, a.second);
 
             if (status == game.END)
             {
-                exp.push_back({conversion(game.get_board(), game.get_turn()), {game.get_my(), game.get_op()}});
+                exp.push_back({conversion(game.get_board(), game.get_turn()), {game.get_my(), game.get_op()}, game.get_turn()});
                 break;
             }
             if (status == game.PASS)
