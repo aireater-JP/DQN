@@ -30,3 +30,4 @@ inline void out(const T &t, U &&...u)
     out(t);
     out(std::forward<U>(u)...);
 }
+
