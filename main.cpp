@@ -52,7 +52,7 @@ void DQN(int epoch, double lr)
             exp.push_back({conversion(game.get_board()), game.get_point(), game.get_turn()});
 
             // 行動選択アルゴリズムはよく考える必要あり
-            pss a = choice(dqn, game, R, E);
+            pss a = choice(dqn, game, R, E, 2, true);
 
             // ゲーム終了
             if (game.main(a.first, a.second) == END)
@@ -74,14 +74,14 @@ void DQN(int epoch, double lr)
         for (int i = 0; i < batch; i++)
         {
             int r = R();
-            vd t = {double(exp[r + 1].point[WHITE]), double(exp[r + 1].point[BLACK]), 0};
+            vd t = {double(exp[r + 1].point[WHITE]), double(exp[r + 1].point[BLACK]), 0.5};
             if (winner == exp[r].turn)
             {
                 t[2] = 1;
             }
             if (winner == -exp[r].turn)
             {
-                t[2] = -1;
+                t[2] = 0;
             }
 
             loss += dqn.gradient(exp[r].s, t);
