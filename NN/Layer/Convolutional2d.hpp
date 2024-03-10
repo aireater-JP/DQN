@@ -61,8 +61,17 @@ public:
 
     void save(fout &f)
     {
-        for(size_t i=0;i<Conv.size();++i){
+        for (size_t i = 0; i < Conv.size(); ++i)
+        {
             Conv[i].save(f);
+        }
+    }
+
+    void load(fin &f)
+    {
+        for (size_t i = 0; i < Conv.size(); ++i)
+        {
+            Conv[i].load(f);
         }
     }
 };
@@ -180,4 +189,22 @@ public:
             Conv[i].save(f);
         }
     }
+
+    void load(fin &f, Conv2d)
+    {
+        f(B);
+        for (size_t i = 0; i < Conv.size(); ++i)
+        {
+            Conv[i].load(f);
+        }
+    }
 };
+
+Conv2d conv2d_load(fin &f)
+{
+    size_t filter_num, X, Y, Z;
+    pss filter, stride, padding;
+    f(filter_num, filter, stride, padding, X, Y, Z);
+    Conv2d res(filter_num, filter, stride, padding, {X, Y, Z});
+    return res;
+}

@@ -37,6 +37,10 @@ void DQN(int epoch, double lr)
 
     dqn.set_Loss(Identity_with_Loss());
 
+    dqn.save("test");
+
+    return;
+
     Game game;
 
     std::vector<play_log> exp;
@@ -100,33 +104,7 @@ void DQN(int epoch, double lr)
     }
 }
 
-void save()
-{
-    vvvd a = {{{1, 2, 3}, {4, 5, 6}}, {{7, 8}, {9, 10}}};
-    pss b={1,2};
-    tsss c={3,4,5};
-    std::string s="aaa";
-    fout f("test");
-    f(a,b,c,s);
-    return;
-}
-
-void load()
-{
-    fin f("test");
-    vvvd a;
-    pss b;
-    tsss c;
-    std::string s;
-    f(a,b,c,s);
-    return;
-}
-
 int main()
 {
-    save();
-    load();
-    return 0;
-
     DQN(100, 0.05);
 }

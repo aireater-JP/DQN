@@ -15,18 +15,27 @@ class Pooling
     size_t y_h, y_w;
 
 public:
-    Pooling(){};
-
-    Pooling(const pss &pool, const pss &input)
-
-        : pool_h(pool.first), pool_w(pool.second),
-          input_size(input),
-          y_h(input.first / pool.first), y_w(input.second / pool.second),
-          mask(input.first / pool.first, std::vector<pss>(input.second / pool.second))
+    Pooling(const pss &pool, const pss &input = {0, 0})
+        : pool_h(pool.first), pool_w(pool.second)
     {
+        if (input.first != 0 and input.second != 0)
+        {
+            set(input);
+        }
     }
 
-    size_t get_y_h() { return y_h; }
+    void set(const pss &input)
+    {
+        input_size = input;
+        y_h = input.first / pool_h;
+        y_w = input.second / pool_w;
+        mask = std::vector<std::vector<pss>>(input.first / pool_h, std::vector<pss>(input.second / pool_w));
+    }
+
+    size_t get_y_h()
+    {
+        return y_h;
+    }
     size_t get_y_w() { return y_w; }
 
     vvd forward(const vvd &x)
@@ -81,7 +90,8 @@ class Pool : public Layer
 public:
     Pool(pss pool, tsss input_size = {0, 0, 0})
         : pool(pool),
-          input_size(input_size)
+          input_size(input_size),
+          P(pool)
     {
         if (std::get<0>(input_size) != 0 and std::get<1>(input_size) != 0 and std::get<2>(input_size) != 0)
         {
@@ -125,3 +135,11 @@ public:
         f(pool, input_size);
     }
 };
+
+Pool pooling_load(fin &f)
+{
+    pss pool;
+    tsss input_size;
+    f(pool, input_size);
+    return Pool(pool, input_size);
+}

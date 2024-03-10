@@ -14,14 +14,14 @@ class Identity_with_Loss : public Loss
     vd m_t;
 
 public:
-    double forward(const vvvd &x, const vd &t)
+    double forward(const vvvd &x, const vd &t) override
     {
         m_t = t;
         m_y = Identity(x[0][0]);
         return sum_of_squared_error(m_y, t);
     }
 
-    vvvd backward()
+    vvvd backward() override
     {
         vvvd dx(1, vvd(1, vd(m_y.size())));
         dx[0][0] = sub(m_y, m_t);

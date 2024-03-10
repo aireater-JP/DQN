@@ -52,3 +52,8 @@ public:
         f(sigmoid);
     }
 };
+
+Sigmoid sigmoid_load(fin &f)
+{
+    return Sigmoid();
+}

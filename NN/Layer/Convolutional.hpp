@@ -132,7 +132,13 @@ public:
         clean(dF);
     }
 
-    void save(fout &f){
+    void save(fout &f)
+    {
+        f(F);
+    }
+
+    void load(fin &f)
+    {
         f(F);
     }
 };

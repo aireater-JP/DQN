@@ -53,3 +53,8 @@ public:
         f(relu);
     }
 };
+
+ReLU relu_load(fin &f)
+{
+    return ReLU();
+}

@@ -118,4 +118,22 @@ public:
         f(W);
         f(B);
     }
+
+    friend void load(fin &f, Dense &x)
+    {
+        f(x.W);
+        f(x.B);
+    }
 };
+
+Dense dense_load(fin &f)
+{
+    size_t output_size;
+    int Init_type;
+    size_t input_size;
+
+    f(output_size, Init_type, input_size);
+    Dense res(output_size, Init_type, input_size);
+    load(f, res);
+    return res;
+}

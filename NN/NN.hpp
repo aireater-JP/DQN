@@ -75,6 +75,7 @@ public:
         // レイヤー数
         f(layer.size());
         f.newline();
+
         // output
         f(output);
 
@@ -83,5 +84,57 @@ public:
             layer[i]->save(f);
         }
         m_loss->save(f);
+    }
+
+    void load(std::string name)
+    {
+        fin f(name);
+
+        size_t size;
+        f(size);
+        f(output);
+
+        for (size_t i = 0; i < size; ++i)
+        {
+            std::string s;
+            f(s);
+
+            if (s == sigmoid)
+            {
+                add_Layer(sigmoid_load(f));
+            }
+            if (s == relu)
+            {
+                add_Layer(relu_load(f));
+            }
+            if (s == pooling)
+            {
+                layer.emplace_back(std::make_unique<Pool>(std::move(pooling_load(f))));
+                output = layer.back()->get();
+            }
+            if (s == flat)
+            {
+                add_Layer(flat_load(f));
+            }
+            if (s == dense)
+            {
+                layer.emplace_back(std::make_unique<Dense>(std::move(dense_load(f))));
+            }
+            if (s == conv2d)
+            {
+                layer.emplace_back(std::make_unique<Conv2d>(std::move(conv2d_load(f))));
+            }
+        }
+
+        std::string s;
+        f(s);
+        if (s == identity)
+        {
+            set_Loss(Identity_with_Loss());
+        }
+        if (s == softmax)
+        {
+            set_Loss(Softmax_with_Loss());
+        }
     }
 };

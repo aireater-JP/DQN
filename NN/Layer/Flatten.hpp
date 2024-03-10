@@ -54,6 +54,10 @@ public:
     void save(fout &f) override
     {
         f(flat);
-        f(X, Y, Z);
     }
 };
+
+flatten flat_load(fin &f)
+{
+    return flatten();
+}
