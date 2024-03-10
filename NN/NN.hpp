@@ -119,10 +119,12 @@ public:
             if (s == dense)
             {
                 layer.emplace_back(std::make_unique<Dense>(std::move(dense_load(f))));
+                output = layer.back()->get();
             }
             if (s == conv2d)
             {
                 layer.emplace_back(std::make_unique<Conv2d>(std::move(conv2d_load(f))));
+                output = layer.back()->get();
             }
         }
 

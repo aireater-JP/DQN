@@ -19,6 +19,7 @@ struct play_log
 void DQN(int epoch, double lr)
 {
     NN dqn;
+
     dqn.add_Layer(Conv2d(32, {3, 3}, {1, 1}, {-1, -1}, {2, 8, 8})); // 32*8*8
     dqn.add_Layer(ReLU());
 
@@ -36,11 +37,7 @@ void DQN(int epoch, double lr)
     // 確率
 
     dqn.set_Loss(Identity_with_Loss());
-
-    dqn.save("test");
-
-    return;
-
+    
     Game game;
 
     std::vector<play_log> exp;

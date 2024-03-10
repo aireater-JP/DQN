@@ -190,12 +190,12 @@ public:
         }
     }
 
-    void load(fin &f, Conv2d)
+    friend void load(fin &f, Conv2d &x)
     {
-        f(B);
-        for (size_t i = 0; i < Conv.size(); ++i)
+        f(x.B);
+        for (size_t i = 0; i < x.Conv.size(); ++i)
         {
-            Conv[i].load(f);
+            x.Conv[i].load(f);
         }
     }
 };
@@ -206,5 +206,6 @@ Conv2d conv2d_load(fin &f)
     pss filter, stride, padding;
     f(filter_num, filter, stride, padding, X, Y, Z);
     Conv2d res(filter_num, filter, stride, padding, {X, Y, Z});
+    load(f, res);
     return res;
 }
