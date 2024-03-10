@@ -6,6 +6,8 @@
 #include <cmath>
 #include <cfloat>
 
+const std::string identity = "identity";
+
 class Identity_with_Loss : public Loss
 {
     vd m_y;
@@ -24,6 +26,11 @@ public:
         vvvd dx(1, vvd(1, vd(m_y.size())));
         dx[0][0] = sub(m_y, m_t);
         return dx;
+    }
+
+    void save(fout &f) override
+    {
+        f(identity);
     }
 
 private:

@@ -82,6 +82,6 @@ public:
         {
             layer[i]->save(f);
         }
-        m_loss->save();
+        m_loss->save(f);
     }
 };

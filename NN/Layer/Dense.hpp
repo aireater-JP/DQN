@@ -10,6 +10,8 @@ const int Xavier = 0;
 // ReLUとか
 const int He = 1;
 
+const std::string dense = "dense";
+
 class Dense : public Layer
 {
     vvd W;
@@ -22,12 +24,15 @@ class Dense : public Layer
     size_t output_size;
     int Init_type;
 
+    size_t input_size;
+
 public:
     Dense(size_t output_size, int Init_type = Xavier, size_t input_size = 0)
         : B(output_size),
           dB(output_size),
           output_size(output_size),
-          Init_type(Init_type)
+          Init_type(Init_type),
+          input_size(input_size)
     {
         if (input_size != 0)
         {
@@ -104,5 +109,13 @@ public:
         dW = mul(dW, -lr);
         W = add(W, dW);
         clean(dW);
+    }
+
+    void save(fout &f) override
+    {
+        f(dense);
+        f(output_size, Init_type, input_size);
+        f(W);
+        f(B);
     }
 };

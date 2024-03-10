@@ -3,6 +3,8 @@
 #include "Convolutional.hpp"
 #include "../Layer.hpp"
 
+const std::string conv2d = "conv2d";
+
 // ちゃんねるを管理するクラス
 class Conv_cell
 {
@@ -54,6 +56,13 @@ public:
         for (size_t i = 0; i < Conv.size(); ++i)
         {
             Conv[i].update(lr);
+        }
+    }
+
+    void save(fout &f)
+    {
+        for(size_t i=0;i<Conv.size();++i){
+            Conv[i].save(f);
         }
     }
 };
@@ -157,6 +166,18 @@ public:
         for (size_t i = 0; i < Conv.size(); ++i)
         {
             Conv[i].update(lr);
+        }
+    }
+
+    void save(fout &f) override
+    {
+        f(conv2d);
+        f(filter_num, filter, stride, padding, X, Y, Z);
+        f(B);
+
+        for (size_t i = 0; i < Conv.size(); ++i)
+        {
+            Conv[i].save(f);
         }
     }
 };

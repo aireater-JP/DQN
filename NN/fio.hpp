@@ -17,6 +17,30 @@ public:
         s >> x;
     }
 
+    template <typename T>
+    void operator()(std::vector<T> &x)
+    {
+        size_t size;
+        operator()(size);
+        x = std::vector<T>(size);
+        for (size_t i = 0; i < size; ++i)
+        {
+            operator()(x[i]);
+        }
+    }
+
+    void operator()(std::pair<std::size_t, std::size_t> &x)
+    {
+        operator()(x.first, x.second);
+    }
+
+    void operator()(std::tuple<std::size_t, std::size_t, std::size_t> &x)
+    {
+        size_t a, b, c;
+        operator()(a, b, c);
+        x = {a, b, c};
+    }
+
     template <typename T, typename... U>
     void operator()(T &t, U &&...u)
     {
@@ -46,13 +70,21 @@ public:
         s << x.size() << "\n";
         for (size_t i = 0; i < x.size(); ++i)
         {
-            s << x[i] << " ";
+            operator()(x[i]);
         }
+        newline();
+    }
+
+    void operator()(const std::pair<std::size_t, std::size_t> &x)
+    {
+        s << x.first << " " << x.second << " ";
+        newline();
     }
 
     void operator()(const std::tuple<std::size_t, std::size_t, std::size_t> &x)
     {
         s << std::get<0>(x) << " " << std::get<1>(x) << " " << std::get<2>(x) << " ";
+        newline();
     }
 
     template <typename T, typename... U>

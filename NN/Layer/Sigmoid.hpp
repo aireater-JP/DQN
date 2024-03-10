@@ -50,6 +50,5 @@ public:
     void save(fout &f) override
     {
         f(sigmoid);
-        f(input_size);
     }
 };

@@ -2,6 +2,8 @@
 
 #include "../Layer.hpp"
 
+const std::string flat = "flat";
+
 class flatten : public Layer
 {
     size_t X, Y, Z;
@@ -47,5 +49,11 @@ public:
             }
         }
         return dx;
+    }
+
+    void save(fout &f) override
+    {
+        f(flat);
+        f(X, Y, Z);
     }
 };

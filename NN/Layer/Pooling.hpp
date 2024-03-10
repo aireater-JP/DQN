@@ -3,7 +3,7 @@
 #include "../Layer.hpp"
 #include <cfloat>
 
-const std::string pool = "pool";
+const std::string pooling = "pool";
 
 class Pooling
 {
@@ -76,11 +76,12 @@ class Pool : public Layer
 
     pss pool;
     size_t X;
+    tsss input_size;
 
 public:
     Pool(pss pool, tsss input_size = {0, 0, 0})
-
-        : pool(pool)
+        : pool(pool),
+          input_size(input_size)
     {
         if (std::get<0>(input_size) != 0 and std::get<1>(input_size) != 0 and std::get<2>(input_size) != 0)
         {
@@ -120,7 +121,7 @@ public:
 
     void save(fout &f) override
     {
-        f(pool);
-        f(input_size);
+        f(pooling);
+        f(pool, input_size);
     }
 };

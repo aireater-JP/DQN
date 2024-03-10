@@ -6,6 +6,8 @@
 #include <cmath>
 #include <cfloat>
 
+const std::string softmax = "softmax";
+
 class Softmax_with_Loss : public Loss
 {
     vd m_y;
@@ -15,7 +17,7 @@ public:
     double forward(const vvvd &x, const vd &t)
     {
         m_t = t;
-        m_y = softmax(x[0][0]);
+        m_y = Softmax(x[0][0]);
         return cross_entropy_error(m_y, t);
     }
 
@@ -26,8 +28,13 @@ public:
         return dx;
     }
 
+    void save(fout &f) override
+    {
+        f(softmax);
+    }
+
 private:
-    vd softmax(const vd &x)
+    vd Softmax(const vd &x)
     {
         vd y(x.size());
         double C = *std::max_element(x.begin(), x.end());

@@ -131,4 +131,8 @@ public:
         F = add(F, dF);
         clean(dF);
     }
+
+    void save(fout &f){
+        f(F);
+    }
 };
