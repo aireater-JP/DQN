@@ -131,9 +131,4 @@ public:
         F = add(F, dF);
         clean(dF);
     }
-
-    void clear()
-    {
-        clean(dF);
-    }
 };

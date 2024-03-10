@@ -56,14 +56,6 @@ public:
             Conv[i].update(lr);
         }
     }
-
-    void clear()
-    {
-        for (size_t i = 0; i < Conv.size(); ++i)
-        {
-            Conv[i].clear();
-        }
-    }
 };
 
 class Conv2d : public Layer
@@ -165,16 +157,6 @@ public:
         for (size_t i = 0; i < Conv.size(); ++i)
         {
             Conv[i].update(lr);
-        }
-    }
-
-    void clear() override
-    {
-        clean(dB);
-
-        for (size_t i = 0; i < Conv.size(); ++i)
-        {
-            Conv[i].clear();
         }
     }
 };

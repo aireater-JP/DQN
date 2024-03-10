@@ -1,6 +1,8 @@
 #pragma once
 #include "../Layer.hpp"
 
+const std::string sigmoid = "sigmoid";
+
 class Sigmoid : public Layer
 {
     tsss input_size;
@@ -43,5 +45,11 @@ public:
             }
         }
         return dx;
+    }
+
+    void save(fout &f) override
+    {
+        f(sigmoid);
+        f(input_size);
     }
 };

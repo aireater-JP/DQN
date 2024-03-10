@@ -6,6 +6,8 @@
 #include <memory>
 #include <vector>
 
+#include "fio.hpp"
+
 class NN
 {
     std::vector<std::unique_ptr<Layer>> layer;
@@ -64,5 +66,22 @@ public:
         {
             layer[i]->update(lr);
         }
+    }
+
+    void save(std::string name)
+    {
+        fout f(name);
+
+        // レイヤー数
+        f(layer.size());
+        f.newline();
+        // output
+        f(output);
+
+        for (size_t i = 0; i < layer.size(); ++i)
+        {
+            layer[i]->save(f);
+        }
+        m_loss->save();
     }
 };

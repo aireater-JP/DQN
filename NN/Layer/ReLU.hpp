@@ -1,6 +1,8 @@
 #pragma once
 #include "../Layer.hpp"
 
+const std::string relu = "reli";
+
 class ReLU : public Layer
 {
     vvvd mask;
@@ -44,5 +46,10 @@ public:
             }
         }
         return dx;
+    }
+
+    void save(fout &f) override
+    {
+        f(relu);
     }
 };

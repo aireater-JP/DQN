@@ -1,6 +1,7 @@
 #pragma once
 
 #include "utility.hpp"
+#include "fio.hpp"
 
 class Layer
 {
@@ -14,7 +15,7 @@ public:
 
     virtual void update(const double lr) {}
 
-    virtual void clear() {}
+    virtual void save(fout &f) = 0;
 };
 
 #include "Layer/Convolutional2d.hpp"

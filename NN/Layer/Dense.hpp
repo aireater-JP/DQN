@@ -105,10 +105,4 @@ public:
         W = add(W, dW);
         clean(dW);
     }
-
-    void clear()override
-    {
-        clean(dB);
-        clean(dW);
-    }
 };

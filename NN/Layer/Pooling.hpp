@@ -3,6 +3,8 @@
 #include "../Layer.hpp"
 #include <cfloat>
 
+const std::string pool = "pool";
+
 class Pooling
 {
     size_t pool_h, pool_w;
@@ -114,5 +116,11 @@ public:
             dx[i] = P.backward(dy[i]);
         }
         return dx;
+    }
+
+    void save(fout &f) override
+    {
+        f(pool);
+        f(input_size);
     }
 };

@@ -2,7 +2,7 @@
 
 #include "Game.hpp"
 
-#include "NN/io.hpp"
+#include "NN/out.hpp"
 
 #include "DQN.h"
 
@@ -75,6 +75,10 @@ void DQN(int epoch, double lr)
         {
             int r = R();
             vd t = {double(exp[r + 1].point[WHITE]), double(exp[r + 1].point[BLACK]), 0.5};
+
+            // 勝者なら1
+            // 敗者なら0
+            // 引き分けなら0.5
             if (winner == exp[r].turn)
             {
                 t[2] = 1;
