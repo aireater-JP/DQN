@@ -35,9 +35,10 @@ public:
     bool get_can_set_f(int x, int y) { return can_set_f[x][y]; }
     S get_next_board(int x, int y) { return next_board[x][y]; }
 
-    double get_point(int c) { return point[c]; }
+    std::map<int, int> get_point() { return point; }
 
     int get_turn() { return turn; }
+    int get_winner() { return winner; }
 
     void refresh()
     {
